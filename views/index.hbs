@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>DB Form</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="container mx-auto px-2 py-6">
+
+    <form x-data @submit.prevent="formSubmit" class="p-4 flex flex-col gap-4 max-w-xl rounded-md items-start border border-gray-400">
+      <label class="flex flex-row gap-4 items-center">
+        <span>Nombre</span>
+        <input name="name" type="text" class="rounded-sm border border-slate-500 px-1 py-0.5" required>
+      </label>
+      <label class="flex flex-row gap-4 items-center">
+        <span>Descripción</span>
+        <input name="description" type="text" class="rounded-sm border border-slate-500 px-1 py-0.5">
+      </label>
+      <label class="flex flex-row gap-4 items-center">
+        <span>Precio</span>
+        <input name="price" type="number" class="rounded-sm border border-slate-500 px-1 py-0.5" required>
+      </label>
+
+      <button type="submit" class="px-6 py-1.5 bg-white border border-gray-300 rounded-md hover:bg-slate-100 transition-colors">Guardar</button>
+    </form>
+
+    <table class="mt-6 table-auto border border-gray-400">
+      <thead>
+        <tr>
+          <th class="border border-gray-300 p-2">ID</th>
+          <th class="border border-gray-300 p-2">Nombre</th>
+          <th class="border border-gray-300 p-2">Descripción</th>
+          <th class="border border-gray-300 p-2">Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+          <tr>
+            <td class="border border-gray-300 p-2">{{ id }}</td>
+            <td class="border border-gray-300 p-2">{{ name }}</td>
+            <td class="border border-gray-300 p-2">{{ description }}</td>
+            <td class="border border-gray-300 p-2">{{ price }}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <script>
+      async function formSubmit(event) {
+        const form = event.target;
+        const elements = form.elements;
+
+        const name = elements.namedItem("name").value;
+        const description = elements.namedItem("description").value;
+        const price = elements.namedItem("price").valueAsNumber;
+
+        const newProduct = { name, description, price };
+
+        const result = await fetch("/products", { method: "POST", body: JSON.stringify(newProduct), headers: { "Content-Type": "application/json" } });
+
+        window.location.reload();
+      }
+    </script>
+  </body>
+</html>
