@@ -38,7 +38,7 @@ export class ProductController {
       throw new NotFoundException('Product does not exist');
     }
 
-    const result = await this.productService.addProduct(newProduct);
+    const result = await this.productService.updateProduct(id, newProduct);
     return 'Rows affected: ' + result;
   }
 
