@@ -27,7 +27,7 @@ SQL_PASSWORD=Usuario123.
 SQL_DATABASE=DBForm
 ```
 
-Ejecutar el script SQL de la base de datos.
+Ejecutar el [script SQL](./script.sql) de la base de datos.
 
 Finalmente ejecuta el servidor y entras a http://localhost:3000:
 
